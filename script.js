@@ -279,11 +279,11 @@ function initThreeJS() {
 function initTerminalText() {
   const terminal = document.getElementById("terminalText");
   const messages = [
-    "> Connecting Asian markets...",
-    "> Establishing trade routes...",
-    "> Optimizing logistics network...",
-    "> Dragon systems: ENGAGED",
-    "> Global dominance: ACTIVE",
+    "> Building logistics bridge...",
+    "> Optimizing delivery routes...",
+    "> Expanding global network...",
+    "> Inventory system: ACTIVE",
+    "> Delivery mission: READY",
   ];
 
   let messageIndex = 0;
@@ -320,60 +320,83 @@ function initTerminalText() {
 
 // Navigation and smooth scrolling
 function initNavigation() {
-  const sections = document.querySelectorAll("section");
-  const navItems = document.querySelectorAll(".nav-item");
+  const navLinks = document.querySelectorAll(".nav-menu a");
+  const navToggle = document.querySelector(".nav-toggle");
+  const navMenu = document.querySelector(".nav-menu");
 
+  // Smooth scrolling for navigation links
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href");
+      const targetSection = document.querySelector(targetId);
+
+      if (targetSection) {
+        const offsetTop = targetSection.offsetTop - 80; // Account for fixed nav height
+        window.scrollTo({
+          top: offsetTop,
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+
+  // Mobile menu toggle
+  if (navToggle) {
+    navToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+      navToggle.classList.toggle("active");
+    });
+  }
+
+  // Update active nav item on scroll
   function updateActiveNav() {
-    const scrollY = window.scrollY;
-    const viewportHeight = window.innerHeight;
+    const sections = document.querySelectorAll("section");
+    const scrollY = window.scrollY + 100;
 
-    sections.forEach((section, index) => {
+    sections.forEach((section) => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute("id");
 
-      if (
-        scrollY >= sectionTop - viewportHeight / 2 &&
-        scrollY < sectionTop + sectionHeight - viewportHeight / 2
-      ) {
-        navItems.forEach((item) => item.classList.remove("active"));
-        if (navItems[index]) navItems[index].classList.add("active");
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${sectionId}`) {
+            link.classList.add("active");
+          }
+        });
       }
     });
   }
 
   window.addEventListener("scroll", updateActiveNav);
-
-  navItems.forEach((item, index) => {
-    item.addEventListener("click", () => {
-      if (sections[index]) {
-        sections[index].scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  });
 }
 
 // Form handling
 function initForm() {
   const form = document.querySelector(".contact-form form");
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    // Simple form validation and submission effect
-    const submitBtn = form.querySelector(".submit-btn");
-    const originalText = submitBtn.textContent;
+      // Simple form validation and submission effect
+      const submitBtn = form.querySelector(".submit-btn");
+      const originalText = submitBtn.textContent;
 
-    submitBtn.textContent = "送信中...";
-    submitBtn.disabled = true;
+      submitBtn.textContent = "送信中...";
+      submitBtn.disabled = true;
 
-    setTimeout(() => {
-      submitBtn.textContent = "送信完了！";
       setTimeout(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        form.reset();
-      }, 2000);
-    }, 1500);
-  });
+        submitBtn.textContent = "送信完了！";
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          form.reset();
+        }, 2000);
+      }, 1500);
+    });
+  }
 }
 
 // Intersection Observer for animations
@@ -393,25 +416,85 @@ function initScrollAnimations() {
   }, observerOptions);
 
   // Observe elements for animation
-  document
-    .querySelectorAll(
-      ".value-card, .company-card, .partnership-card, .ceo-message"
-    )
-    .forEach((el) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(50px)";
-      el.style.transition = "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
-      observer.observe(el);
-    });
+  const animatedElements = document.querySelectorAll(`
+    .mission-item, 
+    .business-card, 
+    .location-card, 
+    .philosophy-main,
+    .feature-item,
+    .value-item
+  `);
+
+  animatedElements.forEach((el) => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(50px)";
+    el.style.transition = "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+    observer.observe(el);
+  });
 }
 
-// Initialize everything when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
+// Navbar background on scroll
+function initNavbarScroll() {
+  const nav = document.querySelector(".nav");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      nav.style.background = "rgba(255, 255, 255, 0.98)";
+      nav.style.boxShadow = "0 2px 20px rgba(0, 0, 0, 0.1)";
+    } else {
+      nav.style.background = "rgba(255, 255, 255, 0.95)";
+      nav.style.boxShadow = "none";
+    }
+  });
+}
+
+// 左右からのフェードインエフェクト
+function initSlideInAnimations() {
+  const slideElements = document.querySelectorAll(
+    ".slide-in-left, .slide-in-right"
+  );
+
+  const observerOptions = {
+    threshold: 0.2,
+    rootMargin: "0px 0px -50px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  slideElements.forEach((element) => {
+    observer.observe(element);
+  });
+}
+
+// 初期化関数を更新
+document.addEventListener("DOMContentLoaded", function () {
+  // 既存の初期化...
   initThreeJS();
   initTerminalText();
-  initNavigation();
-  initForm();
   initScrollAnimations();
+  initNavigation();
+
+  // カウンターアニメーションは即座に開始（ヒーローセクションのみ）
+  animateCounters();
+
+  // 新しいアニメーション初期化
+  setTimeout(() => {
+    initParticles();
+    initFloatingElements();
+    initDrawingAnimations();
+    initTimelineAnimations();
+    initTitleAnimations();
+    initHoverEffects();
+    initSlideInAnimations(); // 左右からのフェードイン
+    createLeafParticles();
+  }, 500);
 });
 
 // Parallax effect for sections
@@ -424,3 +507,369 @@ window.addEventListener("scroll", () => {
     stream.style.transform = `translateY(${rate}px)`;
   });
 });
+
+// パーティクル初期化
+function initParticles() {
+  // 企業理念セクションのパーティクル
+  if (document.getElementById("particles-philosophy")) {
+    particlesJS("particles-philosophy", {
+      particles: {
+        number: { value: 50 },
+        color: { value: "#e74c3c" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3, random: true },
+        size: { value: 3, random: true },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#e74c3c",
+          opacity: 0.2,
+          width: 1,
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: "none",
+          random: false,
+          straight: false,
+          out_mode: "out",
+          bounce: false,
+        },
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true,
+        },
+      },
+      retina_detect: true,
+    });
+  }
+
+  // ミッションセクションのパーティクル
+  if (document.getElementById("particles-mission")) {
+    particlesJS("particles-mission", {
+      particles: {
+        number: { value: 30 },
+        color: { value: ["#e74c3c", "#ff6b6b", "#3498db"] },
+        shape: {
+          type: "polygon",
+          polygon: { nb_sides: 6 },
+        },
+        opacity: { value: 0.4, random: true },
+        size: { value: 4, random: true },
+        move: {
+          enable: true,
+          speed: 1.5,
+          direction: "top",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false,
+        },
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "bubble" },
+          onclick: { enable: true, mode: "repulse" },
+          resize: true,
+        },
+      },
+      retina_detect: true,
+    });
+  }
+}
+
+// カウンターアニメーション（ヒーローセクションのみ）
+function animateCounters() {
+  const heroCounters = document.querySelectorAll(".hero-stats .stat-number");
+
+  const observerOptions = {
+    threshold: 0.3,
+    rootMargin: "0px 0px -50px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = parseInt(counter.getAttribute("data-target"));
+
+        // 数値が有効かチェック
+        if (isNaN(target)) {
+          console.warn(
+            "Invalid data-target value:",
+            counter.getAttribute("data-target")
+          );
+          return;
+        }
+
+        const duration = 2000; // 2秒
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+
+        const updateCounter = () => {
+          if (current < target) {
+            current += increment;
+            const displayValue = Math.floor(current);
+
+            // 24時間対応の場合は「h」を追加
+            if (
+              counter.closest(".stat-item") &&
+              counter.closest(".stat-item").querySelector(".stat-label")
+                .textContent === "24時間対応"
+            ) {
+              counter.textContent = displayValue + "h";
+            } else {
+              counter.textContent = displayValue;
+            }
+
+            requestAnimationFrame(updateCounter);
+          } else {
+            // 最終値を設定
+            if (
+              counter.closest(".stat-item") &&
+              counter.closest(".stat-item").querySelector(".stat-label")
+                .textContent === "24時間対応"
+            ) {
+              counter.textContent = target + "h";
+            } else {
+              counter.textContent = target;
+            }
+          }
+        };
+
+        updateCounter();
+        observer.unobserve(counter);
+      }
+    });
+  }, observerOptions);
+
+  heroCounters.forEach((counter) => {
+    observer.observe(counter);
+  });
+}
+
+// フローティング要素のアニメーション
+function initFloatingElements() {
+  const floatingElements = document.querySelectorAll(".float-element");
+
+  floatingElements.forEach((element, index) => {
+    const delay = element.getAttribute("data-delay") || 0;
+
+    setTimeout(() => {
+      element.style.opacity = "1";
+      element.style.transform = "translateY(0) scale(1)";
+    }, delay);
+
+    // ホバー時の浮遊アニメーション
+    element.addEventListener("mouseenter", () => {
+      anime({
+        targets: element,
+        translateY: -10,
+        scale: 1.1,
+        duration: 300,
+        easing: "easeOutQuad",
+      });
+    });
+
+    element.addEventListener("mouseleave", () => {
+      anime({
+        targets: element,
+        translateY: 0,
+        scale: 1,
+        duration: 300,
+        easing: "easeOutQuad",
+      });
+    });
+  });
+}
+
+// 手描き風SVGアニメーション
+function initDrawingAnimations() {
+  const drawPaths = document.querySelectorAll(".draw-path");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const path = entry.target;
+          const length = path.getTotalLength();
+
+          path.style.strokeDasharray = length;
+          path.style.strokeDashoffset = length;
+
+          anime({
+            targets: path,
+            strokeDashoffset: [length, 0],
+            duration: 3000,
+            easing: "easeInOutQuad",
+            loop: true,
+            direction: "alternate",
+          });
+
+          observer.unobserve(path);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  drawPaths.forEach((path) => {
+    observer.observe(path);
+  });
+}
+
+// タイムラインアニメーション
+function initTimelineAnimations() {
+  const timelineItems = document.querySelectorAll(".timeline-item");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: entry.target,
+            opacity: [0, 1],
+            translateX: [-30, 0],
+            duration: 600,
+            delay: index * 200,
+            easing: "easeOutQuad",
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  timelineItems.forEach((item) => {
+    observer.observe(item);
+  });
+}
+
+// セクションタイトルのアニメーション
+function initTitleAnimations() {
+  const titles = document.querySelectorAll(".animate-title");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: entry.target,
+            opacity: [0, 1],
+            translateY: [50, 0],
+            duration: 1000,
+            easing: "easeOutQuad",
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  titles.forEach((title) => {
+    observer.observe(title);
+  });
+}
+
+// ホバーエフェクト
+function initHoverEffects() {
+  // ミッションブロックのホバー
+  const missionBlocks = document.querySelectorAll(".mission-block");
+  missionBlocks.forEach((block) => {
+    block.addEventListener("mouseenter", () => {
+      anime({
+        targets: block,
+        translateY: -10,
+        boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)",
+        duration: 300,
+        easing: "easeOutQuad",
+      });
+    });
+
+    block.addEventListener("mouseleave", () => {
+      anime({
+        targets: block,
+        translateY: 0,
+        boxShadow: "0 15px 40px rgba(0, 0, 0, 0.1)",
+        duration: 300,
+        easing: "easeOutQuad",
+      });
+    });
+  });
+
+  // ビジネスタイルのホバー
+  const businessTiles = document.querySelectorAll(".business-tile");
+  businessTiles.forEach((tile) => {
+    tile.addEventListener("mouseenter", () => {
+      anime({
+        targets: tile,
+        scale: 1.05,
+        duration: 300,
+        easing: "easeOutQuad",
+      });
+    });
+
+    tile.addEventListener("mouseleave", () => {
+      anime({
+        targets: tile,
+        scale: 1,
+        duration: 300,
+        easing: "easeOutQuad",
+      });
+    });
+  });
+}
+
+// 葉っぱのパーティクル（背景装飾）
+function createLeafParticles() {
+  const leafContainer = document.createElement("div");
+  leafContainer.className = "leaf-particles";
+  leafContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+    `;
+  document.body.appendChild(leafContainer);
+
+  function createLeaf() {
+    const leaf = document.createElement("div");
+    leaf.innerHTML = "🍃";
+    leaf.style.cssText = `
+            position: absolute;
+            font-size: ${Math.random() * 20 + 10}px;
+            opacity: ${Math.random() * 0.5 + 0.3};
+            left: ${Math.random() * 100}%;
+            top: -50px;
+            pointer-events: none;
+        `;
+
+    leafContainer.appendChild(leaf);
+
+    anime({
+      targets: leaf,
+      translateY: window.innerHeight + 100,
+      translateX: Math.random() * 200 - 100,
+      rotate: Math.random() * 360,
+      duration: Math.random() * 3000 + 5000,
+      easing: "linear",
+      complete: () => {
+        leaf.remove();
+      },
+    });
+  }
+
+  // 定期的に葉っぱを生成
+  setInterval(createLeaf, 3000);
+}

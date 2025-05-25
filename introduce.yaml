@@ -1,0 +1,120 @@
+company:
+  name: 龍昇株式会社
+  english_name: Ryu-Syou Co., Ltd.
+  established: 2017-03-28
+  ceo: 津本 君美子
+  tax_advisor: ARK税理士事務所
+  website: https://ryu-syou.co.jp
+  tagline: 信頼・可能性・安心
+
+sections:
+  - title: TOP
+  - title: 企業理念
+    philosophy:
+      keywords: [信頼, 可能性, 安心]
+      message: お客様と共に成長する企業
+      goal: グローバル企業への成長
+  - title: ミッション
+    mission_items:
+      - id: 01
+        title: 課題解決企業
+        description: お客様から頂いた課題をあらゆる方向から分析し解決できる企業
+      - id: 02
+        title: 安心サービス
+        description: お客様が安心して依頼できるサービスの提供
+      - id: 03
+        title: チーム力
+        description: チームで問題に向き合い、諦めない企業を目指す
+      - id: 04
+        title: 信頼関係
+        description: お客様第一で相互の信頼関係を築く
+  - title: 事業内容
+    logistics:
+      overview: 完全社内対応で一貫物流を提供
+      overseas:
+        countries: [中国, ベトナム]
+        features:
+          - 現地法人による社内管理
+          - リアルタイム在庫システム
+          - 品質管理
+        locations: 2
+        surveillance: 24h
+      transport:
+        description: 海上・航空輸送の最適化、通関ワンストップ対応
+        routes: 複数
+        clearance: 迅速
+      domestic:
+        centers:
+          - name: 館林物流センター
+            area: 550坪
+            structure: 高床ホーム
+            height: 5.5m
+            access: 館林ICから2km
+          - name: 新狭山物流センター
+            area: 580坪
+            floor: 4F
+            feature: EC対応
+      ec_delivery:
+        platforms: [Amazon, 楽天市場]
+        features:
+          - 即日発送
+          - ワンストップ
+          - 社内完結
+          - 外注依存ゼロ
+    diversified_business:
+      beauty:
+        name: エステ事業
+        location: 埼玉県川口市
+        stores: 4
+      food:
+        name: 食品卸事業
+        coverage: 卸売〜小売
+        feature: 安心品質の提供
+      trade:
+        name: 貿易・国際物流
+        feature: 国際ネットワークで世界とつながる
+      ecommerce:
+        name: EC販売
+        platforms: [Amazon, 楽天]
+        feature: 効率的な販売戦略
+  - title: 拠点・施設
+    locations:
+      - name: 本店
+        address: 埼玉県さいたま市南区大谷口625-3
+        function: 本社機能・管理部門
+      - name: 館林物流センター
+        address: 群馬県館林市赤生田町657-3
+        area: 550坪
+        height: 5.5m
+        access: 館林ICから2km
+      - name: 新狭山物流センター
+        address: 埼玉県狭山市新狭山1-13-3 ロジベース新狭山4F
+        area: 580坪
+        feature: EC対応
+      - name: 西川口オフィス
+        address: 埼玉県川口市西川口1-22-1 仁志第二コーポ602
+        function: 営業拠点・顧客対応
+  - title: 会社概要
+    details:
+      name: 龍昇株式会社
+      english_name: Ryu-Syou Co., Ltd.
+      established: 平成29年3月28日（2017年）
+      ceo: 津本 君美子
+      tax_advisor: ARK税理士事務所
+      website: https://ryu-syou.co.jp
+  - title: お問い合わせ
+    contact:
+      message: 一貫物流システムについてお気軽にご相談ください
+      instructions: |
+        海外調達から国内配送まで、物流のお悩みを解決いたします。
+        まずはお気軽にお問い合わせください。
+      form_fields:
+        - 会社名
+        - お名前
+        - メールアドレス
+        - お問い合わせ内容（選択）
+        - メッセージ（自由記述）
+      email: info@ryu-syou.co.jp
+  - title: フッター
+    address: 埼玉県さいたま市南区大谷口625-3
+    copyright: "© 2025 龍昇株式会社. All rights reserved."
