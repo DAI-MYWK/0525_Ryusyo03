@@ -1,0 +1,60 @@
+「セクション別の使用技術（言語／フレームワーク／ライブラリ）」のまとめです。
+※ページ全体で共通利用されているものは各所に重複して記載しています。
+① HERO（ファーストビュー）
+種別	内容	用途
+言語	HTML5 / CSS3（SCSS 想定） / JavaScript（ES6）	基本マークアップ・装飾・動き
+JSライブラリ	GSAP 3 + ScrollTrigger	背景画像のフェードイン、スクロール誘導アニメーション
+JSライブラリ	Locomotive Scroll（または Smooth Scroll Polyfill）	全体のスムーズスクロール制御
+ネイティブAPI	Intersection Observer	要素がビューポートに入った瞬間のアニメ開始判定
+フォント	Google Fonts + WebFont Loader	見出し用の英字フォント読み込み
+汎用	jQuery	ハンバーガーメニュー開閉・アンカーリンク移動
+② INTRODUCTION（「秋、謳う。」テキストブロック）
+種別	内容	用途
+言語	HTML5 / CSS3 / JavaScript	レイアウトと動き
+アニメ系	AOS (Animate On Scroll)	テキスト行ごとのフェードアップ
+レイアウト	CSS Grid / Flexbox	中央寄せ・余白調整
+汎用	jQuery	アンカーリンク移動・高さ計算
+③ GARDEN LIGHT UP セクション
+種別	内容	用途
+言語	HTML5 / CSS3 / JavaScript	テーブル調レイアウト
+JSライブラリ	GSAP ScrollTrigger	パララックス風の画像切り替え
+画像表示	lazyload.js（ネイティブ遅延読込の場合も）	画像の遅延読み込み
+汎用	jQuery	タブ切替・ボタン hover
+④ THRUSH CAFE（ディナーコース紹介）
+種別	内容	用途
+言語	HTML5 / CSS3 / JavaScript	セクション構成
+スライダー	Swiper.js	料理写真の横スライド（スマホ時）
+アニメ系	GSAP	キャプションのフェード・ズーム
+汎用	jQuery	「ご予約はこちら」ボタンのモーダル呼び出し
+⑤ PHOTO CONTEST（フォトコンテスト）
+種別	内容	用途
+言語	HTML5 / CSS3 / JavaScript	グリッド表示
+外部API	Instagram Graph API（または SnapWidget）	#tokyoredgarden2024 の投稿取得
+レイアウト	Masonry.js	不定形サムネイルのタイル配置
+画像拡大	Lightbox2 / GLightbox	クリック時のポップアップ表示
+アニメ系	GSAP / AOS	サムネイルのフェードイン
+⑥ ACCESS（アクセス）
+種別	内容	用途
+言語	HTML5 / CSS3 / JavaScript	住所・地図表示
+マップ	Google Maps JavaScript API	インタラクティブ地図埋め込み
+アニメ系	GSAP	セクション出現時のタイトルアニメ
+汎用	jQuery	ページ内スクロール
+⑦ FOOTER（ロゴ・SNSリンクなど）
+種別	内容	用途
+言語	HTML5 / CSS3 / JavaScript	フッター全体
+アイコン	Font Awesome 6	SNSアイコン
+JS	jQuery	「TOPへ戻る」ボタンのスムーズスクロール
+CSS	CSS Variables	テーマカラー一元管理
+サイト全体で確認できたバックエンド・ビルド環境（推定）
+種別	内容	理由
+CMS	WordPress 6.x（PHP 8系）	画像パスに /wp-content/ が含まれる、管理画面用クッキーの発行
+ビルド	Webpack / Babel	bundle.min.js の存在とソースマップコメント
+CSSプリプロセッサ	SCSS (Dart Sass)	.scss ソースマップ参照
+サーバ	Apache 2.4 + mod_php	レスポンスヘッダの Server: Apache
+再現時のポイント
+GSAP + ScrollTrigger を中心にアニメーションを制御し、
+セクションごとのフェード・パララックスを実装すると近い体験になります。
+スムーズスクロールは Locomotive Scroll か scroll-behavior: smooth の併用で簡略化可能。
+画像は WebP + lazy‑loading を使い、暗めのオーバーレイとブレンドモードで “夜の紅葉” の雰囲気を演出。
+背景動画を使う場合は <video autoplay muted playsinline> でモバイル対応。
+WordPress を使う場合は Advanced Custom Fields 等で各セクションをブロック化すると更新が楽になります。
